@@ -3,17 +3,20 @@ import { useRef, useState } from "react";
 
 const Image = () => {
   const ogWidth = 1700;
-  const ogHeight = 2200;
+  //   const ogHeight = 2200;
   const imageRef = useRef<HTMLImageElement>(null);
 
   const [width, setWidth] = useState(ogWidth);
-  const [height, setHeight] = useState(ogHeight);
+  //   const [height, setHeight] = useState(ogHeight);
 
   const handleLoad = () => {
     if (imageRef?.current) {
-      const { width: w, height: h } = imageRef.current.getBoundingClientRect();
+      const {
+        width: w,
+        // height: h
+      } = imageRef.current.getBoundingClientRect();
       setWidth(w);
-      setHeight(h);
+      //   setHeight(h);
       imageRef?.current?.addEventListener("onload", () => {
         console.log("loaded");
       });
