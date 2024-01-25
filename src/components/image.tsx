@@ -85,7 +85,6 @@ type BoundingBoxPropsType = {
 };
 
 const BoundingBox = ({ top, left, width, height }: BoundingBoxPropsType) => {
-  console.log("bb render", top, left, width, height);
   return (
     <>
       <div
