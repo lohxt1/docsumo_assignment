@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Boxes from "./boxes";
 
 const Image = () => {
@@ -18,6 +18,13 @@ const Image = () => {
     }
   };
 
+  useEffect(() => {
+    window.addEventListener("resize", handleLoad);
+    return () => {
+      window.removeEventListener("resize", handleLoad);
+    };
+  }, []);
+
   return (
     <>
       <div className="outer-image-container">
@@ -34,13 +41,13 @@ const Image = () => {
         {`
           .outer-image-container {
             width: calc(100% - 400px);
-            height: 100vh;
+            height: calc(100vh - 40px);
             position: relative;
           }
           .image-container {
             margin: auto;
             width: fit-content;
-            height: 100vh;
+            height: calc(100vh - 40px);
             display: flex;
             flex-direction: row;
             position: relative;
@@ -48,7 +55,7 @@ const Image = () => {
           img {
             position: relative;
             // margin: auto;
-            height: calc(100vh - 2px);
+            height: calc(calc(100vh - 40px) - 2px);
             object-fit: contain;
             border: 1px solid var(--bg-alt);
           }

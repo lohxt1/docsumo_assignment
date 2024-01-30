@@ -14,6 +14,7 @@ const Sections = () => {
             className={`section-block ${
               selectedSection?.id == section?.id ? "section-selected" : ""
             }`}
+            key={`section-${section?.id}`}
             onMouseEnter={() => {
               setSelectedSection(section);
             }}
@@ -36,18 +37,19 @@ const Sections = () => {
             display: flex;
             flex-direction: column;
             gap: 20px;
+            font-family: courier new;
           }
           .sections-title {
             font-size: 14px;
             width: calc(100% - 20px);
-            padding: 20px 10px;
-            color: var(--tx);
+            padding: 20px 10px 0px 10px;
+            color: var(--tx-alt);
+            font-weight: 400;
           }
           .section-block {
             font-size: 12px;
             padding: 10px;
             cursor: pointer;
-            font-family: courier new;
             color: var(--tx);
             display: flex;
             flex-direction: column;
