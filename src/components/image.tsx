@@ -1,46 +1,28 @@
-import { useCommonContext } from "@/contexts/common";
 import { useRef, useState } from "react";
+import Boxes from "./boxes";
 
 const Image = () => {
+  // the original image width from which the sections data were calculated (from assets folder)
+  // this value is necessary to calculate the amount by which the bounding box dimensions must be scaled.
   const ogWidth = 1700;
-  //   const ogHeight = 2200;
   const imageRef = useRef<HTMLImageElement>(null);
 
   const [width, setWidth] = useState(ogWidth);
-  //   const [height, setHeight] = useState(ogHeight);
 
+  // event listener for when the image is done loading on the DOM.
+  // Get the iamge width on load
   const handleLoad = () => {
     if (imageRef?.current) {
-      const {
-        width: w,
-        // height: h
-      } = imageRef.current.getBoundingClientRect();
+      const { width: w } = imageRef.current.getBoundingClientRect();
       setWidth(w);
-      //   setHeight(h);
-      imageRef?.current?.addEventListener("onload", () => {
-        console.log("loaded");
-      });
     }
   };
-
-  const { selectedSection } = useCommonContext();
-
-  const { position } = selectedSection || {};
-
-  const ratio = width / ogWidth;
 
   return (
     <>
       <div className="outer-image-container">
         <div className="image-container">
-          {position && (
-            <BoundingBox
-              left={position[0] * ratio}
-              top={position[1] * ratio}
-              width={(position[2] - position[0]) * ratio}
-              height={(position[3] - position[1]) * ratio}
-            />
-          )}
+          <Boxes imageWidth={width} />
           <img
             onLoad={handleLoad}
             ref={imageRef}
@@ -66,8 +48,9 @@ const Image = () => {
           img {
             position: relative;
             // margin: auto;
-            height: 100vh;
+            height: calc(100vh - 2px);
             object-fit: contain;
+            border: 1px solid var(--bg-alt);
           }
         `}
       </style>
@@ -76,37 +59,3 @@ const Image = () => {
 };
 
 export default Image;
-
-type BoundingBoxPropsType = {
-  top: number;
-  left: number;
-  width: number;
-  height: number;
-};
-
-const BoundingBox = ({ top, left, width, height }: BoundingBoxPropsType) => {
-  return (
-    <>
-      <div
-        className="bounding-box"
-        style={{
-          top: `${top}px`,
-          left: `${left}px`,
-          width: `${width}px`,
-          height: `${height}px`,
-        }}
-      ></div>
-      <style jsx>
-        {`
-          .bounding-box {
-            z-index: 10;
-            position: absolute;
-            width: 100px;
-            height: 20px;
-            background: #00f5;
-          }
-        `}
-      </style>
-    </>
-  );
-};

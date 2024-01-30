@@ -7,16 +7,25 @@ const Sections = () => {
     <>
       <div className="sections-container">
         <div className="sections-title">Sections</div>
+
+        {/* Sections are listed and are made selectable based on the mouseenter/mouseleave events */}
         {sections?.map((section) => (
           <div
             className={`section-block ${
-              selectedSection?.id == section?.id ? "selected" : ""
+              selectedSection?.id == section?.id ? "section-selected" : ""
             }`}
-            onClick={() => {
+            onMouseEnter={() => {
               setSelectedSection(section);
             }}
+            onMouseLeave={() => {
+              setSelectedSection(null);
+            }}
           >
-            {section?.label}
+            <div>{section?.label}</div>
+            <div className="section-block-value">Value: {section?.value}</div>
+            <div className="section-block-value">
+              Confidence: {section?.confidence}
+            </div>
           </div>
         ))}
       </div>
@@ -31,19 +40,25 @@ const Sections = () => {
           .sections-title {
             font-size: 14px;
             width: calc(100% - 20px);
-            border-bottom: 1px solid #fff5;
             padding: 20px 10px;
-            color: #fff;
+            color: var(--tx);
           }
           .section-block {
             font-size: 12px;
             padding: 10px;
             cursor: pointer;
             font-family: courier new;
-            color: #fff;
+            color: var(--tx);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
           }
-          .selected {
-            background: #00f5;
+          .section-block-value {
+            font-size: 11px;
+            color: var(--tx-alt);
+          }
+          .section-selected {
+            background: var(--blue-alt);
           }
         `}
       </style>

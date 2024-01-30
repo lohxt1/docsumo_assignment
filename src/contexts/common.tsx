@@ -1,14 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import sections from "@/assets/sections.json";
 
-type SectionType = {
-  id: number;
-  label: string;
-  confidence: number;
-  position: number[];
-  value: string;
-};
-
+// Extract the required data from the sections.json file
 const extractSectionsData = () => {
   const _sections = sections.data?.sections
     .map((section) => section?.children)
@@ -32,10 +25,18 @@ const extractSectionsData = () => {
   return _sections;
 };
 
+export type SectionType = {
+  id: number;
+  label: string;
+  confidence: number;
+  position: number[];
+  value: string;
+};
+
 type CommonContextStateType = {
   sections: SectionType[];
   selectedSection: SectionType | null;
-  setSelectedSection: (v: SectionType) => void;
+  setSelectedSection: (v: SectionType | null) => void;
 };
 
 const CommonContext = createContext<CommonContextStateType | null>(null);

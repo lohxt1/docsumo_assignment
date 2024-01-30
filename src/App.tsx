@@ -1,12 +1,17 @@
+import { useState } from "react";
 import Image from "./components/image";
 import Sections from "./components/sections";
 import { CommonContextProvider } from "./contexts/common";
+import ThemeButton from "./components/themeButton";
 
 function App() {
+  const [isDarkMode, toggleMode] = useState<boolean>(true);
+
   return (
     <>
       <CommonContextProvider>
-        <div className="container">
+        <div className={`container ${isDarkMode ? "dark" : ""}`}>
+          <ThemeButton isDarkMode={isDarkMode} toggleMode={toggleMode} />
           <div className="left">
             <Sections />
           </div>
@@ -15,6 +20,32 @@ function App() {
           </div>
         </div>
       </CommonContextProvider>
+
+      {/* Minimal Color System for light/dark mode */}
+      <style jsx global>
+        {`
+          :root {
+            --blue: #00f;
+            --blue-alt: #00f5;
+            --tx: #000;
+            --tx-alt: #000a;
+            --bg: #fff;
+            --bg-alt: #ddd;
+            --red: #f00;
+          }
+
+          .dark {
+            --blue: #00f;
+            --blue-alt: #00f5;
+            --tx: #fff;
+            --tx-alt: #fffa;
+            --bg: #000;
+            --bg-alt: #222;
+            --red: #f00;
+          }
+        `}
+      </style>
+
       <style jsx>
         {`
           body {
@@ -26,13 +57,14 @@ function App() {
             height: 100vh;
             display: flex;
             flex-direction: row;
-            background: #000;
+            background: var(--bg);
           }
           .left {
             width: 400px;
             max-width: 400px;
             height: 100vh;
-            border-right: 1px solid #fff5;
+            overflow-y: scroll;
+            border-right: 1px solid var(--bg-alt);
           }
           .right {
             width: calc(100vw - 500px);
@@ -45,13 +77,3 @@ function App() {
 }
 
 export default App;
-
-// left side
-// ~ sections.json list
-
-// right side
-// ~ image
-// ~ sections.json list
-
-// global state
-// ~ selected section
