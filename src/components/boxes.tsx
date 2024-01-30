@@ -42,6 +42,7 @@ const BoundingBox = ({
   const { position } = section || {};
 
   // Bounding box dimension calculations
+  // in (x,y) coordinate representation
 
   //   (left, top)                                                            (left + width, top)
   //   _________________________________________________________________________

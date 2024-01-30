@@ -22,7 +22,7 @@ const Image = () => {
     <>
       <div className="outer-image-container">
         <div className="image-container">
-          <Boxes imageWidth={width} />
+          {width && imageRef?.current && <Boxes imageWidth={width} />}
           <img
             onLoad={handleLoad}
             ref={imageRef}
